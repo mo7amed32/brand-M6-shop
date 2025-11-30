@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { brand: { dark: '#000000', gold: '#d4af37' } } } } }</script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    
+    <nav class="bg-black text-white p-4 sticky top-0 z-50 shadow-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-brand-gold">BRAND<span class="text-white">M6</span></a>
+            <ul class="hidden md:flex space-x-6 space-x-reverse">
+                <li><a href="index.html" class="hover:text-brand-gold">الرئيسية</a></li>
+                <li><a href="shop.html" class="hover:text-brand-gold">المتجر</a></li>
+                <li><a href="about.html" class="hover:text-brand-gold">من نحن</a></li>
+            </ul>
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <a href="cart.html" class="relative group">
+                    <i class="fas fa-shopping-bag text-xl group-hover:text-brand-gold"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-brand-gold text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                <a href="login.html"><i class="fas fa-user text-xl"></i></a>
+                <button id="mobile-menu-btn" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mt-4 bg-gray-900 p-4 rounded">
+            <a href="index.html" class="block py-2 hover:text-brand-gold border-b border-gray-700">الرئيسية</a>
+            <a href="shop.html" class="block py-2 hover:text-brand-gold border-b border-gray-700">المتجر</a>
+            <a href="about.html" class="block py-2 hover:text-brand-gold border-b border-gray-700">من نحن</a>
+            <a href="cart.html" class="block py-2 hover:text-brand-gold border-b border-gray-700">السله</a>
+            <a href="login.html" class="block py-2 hover:text-brand-gold">حسابي</a>
+            <a href="register.html" class="block py-2 text-white hover:text-brand-gold">تسجيل الدخول</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto py-16 px-4">
+        <a href="shop.html" class="inline-block mb-6 text-gray-500 hover:text-black transition">
+            <i class="fas fa-arrow-right ml-2"></i> العودة للمتجر
+        </a>
+
+        <div id="product-details" class="bg-white rounded-2xl shadow-xl overflow-hidden min-h-[400px]">
+            <div class="flex flex-col items-center justify-center h-full pt-20">
+                <i class="fas fa-spinner fa-spin text-4xl text-brand-gold"></i>
+                <p class="mt-4 text-gray-500">جاري تحميل المنتج...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // كود عرض المنتج بالتفصيل
+        setTimeout(() => {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id'));
+            const container = document.getElementById('product-details');
+
+            if (!id) {
+                container.innerHTML = `
+                    <div class="text-center p-10">
+                        <i class="fas fa-exclamation-circle text-5xl text-red-500 mb-4"></i>
+                        <h2 class="text-2xl font-bold mb-2">تنبيه</h2>
+                        <p class="text-gray-500 mb-6">يجب اختيار منتج من المتجر أولاً.</p>
+                        <a href="shop.html" class="bg-black text-white px-6 py-2 rounded hover:bg-brand-gold hover:text-black transition">الذهاب للمتجر</a>
+                    </div>`;
+            } else {
+                // التأكد من وجود الداتا
+                if(window.allProducts) {
+                    const product = window.allProducts.find(p => p.id === id);
+                    if (product) {
+                        container.innerHTML = `
+                            <div class="flex flex-col lg:flex-row h-full">
+                                <div class="lg:w-1/2 bg-gray-100">
+                                    <img src="${product.img}" class="w-full h-[500px] object-cover hover:scale-105 transition duration-700">
+                                </div>
+                                
+                                <div class="lg:w-1/2 p-10 flex flex-col justify-center">
+                                    <span class="text-brand-gold font-bold tracking-widest text-sm mb-2 uppercase">مجموعة ${product.category}</span>
+                                    <h1 class="text-4xl font-bold mb-6 text-black">${product.name}</h1>
+                                    <p class="text-gray-600 mb-8 text-lg leading-relaxed">${product.desc}</p>
+                                    
+                                    <div class="flex items-center gap-6 mb-10">
+                                        <span class="text-4xl font-bold text-black">${product.price} ج.م</span>
+                                        <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">متوفر في المخزون</span>
+                                    </div>
+
+                                    <div class="flex gap-4">
+                                        <button onclick="addToCart(${product.id})" class="flex-grow bg-black text-white py-4 rounded-lg text-lg font-bold hover:bg-brand-gold hover:text-black transition duration-300 shadow-lg flex justify-center items-center gap-2">
+                                            <i class="fas fa-shopping-bag"></i> إضافة للسلة
+                                        </button>
+                                        <button class="w-16 h-14 border-2 border-gray-200 rounded-lg flex items-center justify-center hover:border-red-500 hover:text-red-500 transition">
+                                            <i class="far fa-heart text-xl"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-2 gap-4 mt-10 border-t pt-6">
+                                        <div class="flex items-center gap-2 text-sm text-gray-500">
+                                            <i class="fas fa-truck text-black"></i> شحن سريع
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm text-gray-500">
+                                            <i class="fas fa-shield-alt text-black"></i> خامات أصلية
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                    }
+                }
+            }
+        }, 500); // تأخير بسيط لضمان تحميل البيانات
+    </script>
+</body>
+</html>

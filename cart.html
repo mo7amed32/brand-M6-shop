@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلة المشتريات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { brand: { dark: '#000000', gold: '#d4af37' } } } } }</script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    
+    <nav class="bg-black text-white p-4 sticky top-0 z-50 shadow-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-brand-gold">BRAND<span class="text-white">M6</span></a>
+            <ul class="hidden md:flex space-x-6 space-x-reverse">
+                <li><a href="index.html" class="hover:text-brand-gold">الرئيسية</a></li>
+                <li><a href="shop.html" class="hover:text-brand-gold">المتجر</a></li>
+                <li><a href="about.html" class="hover:text-brand-gold">من نحن</a></li>
+                <li><a href="cart.html" class="hover:text-brand-gold">السله</a></li>
+            </ul>
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <a href="cart.html" class="text-brand-gold"><i class="fas fa-shopping-bag text-xl"></i></a>
+                <a href="login.html"><i class="fas fa-user text-xl"></i></a>
+                <button id="mobile-menu-btn" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mt-4 bg-gray-900 p-4 rounded">
+            <a href="index.html" class="block py-2 hover:text-brand-gold border-b border-gray-700">الرئيسية</a>
+            <a href="shop.html" class="block py-2 hover:text-brand-gold border-b border-gray-700">المتجر</a>
+            <a href="about.html" class="block py-2 hover:text-brand-gold border-b border-gray-700">من نحن</a>
+             <a href="cart.html" class="block py-2 hover:text-brand-gold border-b border-gray-700">السلة</a>
+            <a href="login.html" class="block py-2 hover:text-brand-gold">حسابي</a>
+            <a href="register.html" class="block py-2 text-white hover:text-brand-gold">تسجيل الدخول</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto py-16 px-4">
+        <h1 class="text-4xl font-bold mb-10 text-center">عربة التسوق</h1>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <div class="lg:w-2/3">
+                <div id="cart-items" class="bg-white rounded-lg shadow-lg p-6 min-h-[200px]">
+                    </div>
+            </div>
+
+            <div class="lg:w-1/3">
+                <div class="bg-white rounded-lg shadow-lg p-8 sticky top-24 border border-gray-100">
+                    <h2 class="text-2xl font-bold mb-6 border-b pb-4">ملخص الطلب</h2>
+                    
+                    <div class="flex justify-between mb-4 text-gray-600">
+                        <span>المجموع الفرعي</span>
+                        <span id="subtotal-price">0 ج.م</span>
+                    </div>
+                    <div class="flex justify-between mb-4 text-gray-600">
+                        <span>الشحن (ثابت)</span>
+                        <span>50 ج.م</span>
+                    </div>
+                    <div class="border-t pt-4 mt-4 flex justify-between items-center mb-8">
+                        <span class="text-xl font-bold">الإجمالي الكلي</span>
+                        <span id="total-price" class="text-2xl font-bold text-brand-gold">0 ج.م</span>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm text-gray-500 mb-2">كود الخصم</label>
+                        <div class="flex gap-2">
+                            <input type="text" placeholder="Promo Code" class="flex-grow border rounded p-2 focus:outline-none focus:border-brand-gold">
+                            <button class="bg-gray-800 text-white px-4 rounded hover:bg-black">تطبيق</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <p class="text-sm text-gray-500 mb-2">طرق الدفع المقبولة</p>
+                        <div class="flex gap-3 text-3xl text-gray-400">
+                            <i class="fab fa-cc-visa hover:text-blue-900 transition"></i>
+                            <i class="fab fa-cc-mastercard hover:text-red-600 transition"></i>
+                            <i class="fas fa-money-bill-wave hover:text-green-600 transition"></i>
+                        </div>
+                    </div>
+
+                    <button onclick="alert('سيتم تحويلك لبوابة الدفع الإلكتروني...')" class="w-full bg-brand-gold text-black py-4 rounded font-bold text-lg hover:bg-black hover:text-brand-gold transition duration-300 shadow-lg">
+                        إتمام الشراء آمن <i class="fas fa-lock ml-2 text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const container = document.getElementById('cart-items');
+            const subtotalEl = document.getElementById('subtotal-price');
+            const totalEl = document.getElementById('total-price');
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10">
+                        <i class="fas fa-shopping-cart text-6xl text-gray-200 mb-4"></i>
+                        <p class="text-gray-500 text-xl">السلة فارغة حالياً</p>
+                        <a href="shop.html" class="text-brand-gold underline mt-2 block">تصفح المنتجات</a>
+                    </div>`;
+                subtotalEl.innerText = "0 ج.م";
+                totalEl.innerText = "0 ج.م";
+            } else {
+                container.innerHTML = cart.map((item, index) => {
+                    subtotal += item.price;
+                    return `
+                        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-gray-100 py-6 last:border-0 hover:bg-gray-50 transition p-2 rounded">
+                            <div class="flex items-center gap-4 w-full sm:w-auto">
+                                <img src="${item.img}" class="w-24 h-24 rounded-lg object-cover shadow-sm">
+                                <div>
+                                    <h3 class="font-bold text-lg text-black">${item.name}</h3>
+                                    <p class="text-gray-500 text-sm">${item.category}</p>
+                                    <p class="text-brand-gold font-bold mt-1">${item.price} ج.م</p>
+                                </div>
+                            </div>
+                            <button onclick="removeItem(${index})" class="text-red-400 hover:text-red-600 transition mt-4 sm:mt-0 bg-red-50 p-2 rounded-full w-10 h-10 flex items-center justify-center">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>`;
+                }).join('');
+                
+                subtotalEl.innerText = subtotal + " ج.م";
+                totalEl.innerText = (subtotal + 50) + " ج.م";
+            }
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            updateCartCount();
+        }
+        renderCart();
+    </script>
+</body>
+</html>

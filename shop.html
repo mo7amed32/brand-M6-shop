@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المتجر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { brand: { dark: '#1a1a1a', gold: '#d4af37' } } } } }</script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <nav class="bg-brand-dark text-white p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-brand-gold">BRAND<span class="text-white">M6</span></a>
+            <ul class="hidden md:flex space-x-6 space-x-reverse">
+                <li><a href="index.html" class="hover:text-brand-gold">الرئيسية</a></li>
+                <li><a href="shop.html" class="hover:text-brand-gold">المتجر</a></li>
+                <li><a href="about.html" class="hover:text-brand-gold">من نحن</a></li>
+            </ul>
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <a href="cart.html" class="relative"><i class="fas fa-shopping-cart text-xl"></i><span id="cart-count" class="absolute -top-2 -right-2 bg-brand-gold text-black text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span></a>
+                <a href="login.html"><i class="fas fa-user text-xl"></i></a>
+                <button id="mobile-menu-btn" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mt-4 border-t border-gray-700 pt-4">
+         <a href="index.html" class="block py-3 border-b border-gray-700 hover:text-brand-gold">الرئيسية</a>
+            <a href="shop.html" class="block py-3 border-b border-gray-700 hover:text-brand-gold">المتجر</a>
+            <a href="about.html" class="block py-3 border-b border-gray-700 hover:text-brand-gold">من نحن</a>
+            <a href="cart.html" class="block py-3 border-b border-gray-700 hover:text-brand-gold">السلة</a>
+            <a href="login.html" class="block py-3 hover:text-brand-gold">حسابي</a>
+            <a href="register.html" class="block py-2 text-white hover:text-brand-gold">تسجيل الدخول</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto py-12 px-4">
+        <h1 class="text-3xl font-bold mb-8 text-center">جميع المنتجات</h1>
+        <div id="shop-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

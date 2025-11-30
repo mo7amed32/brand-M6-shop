@@ -1,0 +1,27 @@
+/* css/style.css */
+
+/* 1. لما تعلم على أي كلام في الموقع، لونه هيبقى ذهبي (جرب تعلم على النص بالماوس) */
+::selection {
+    background-color: #d4af37;
+    color: #000000;
+}
+
+/* 2. حركة سحرية للصور: لما الماوس ييجي على أي صورة منتج، تكبر سنة صغيرة */
+img:hover {
+    transform: scale(1.02); /* تكبير بنسبة بسيطة جداً */
+    transition: transform 0.3s ease-in-out; /* نعومة في الحركة */
+    cursor: pointer;
+}
+
+/* 3. توهج للأزرار: أي زرار الماوس ييجي عليه يعمل ضوء ذهبي حواليه */
+button:hover, a.bg-brand-gold:hover {
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6) !important; /* ضوء ذهبي */
+    transition: box-shadow 0.3s ease;
+}
+
+/* 4. كود يرفع كروت المنتجات لفوق سنة لما تقف عليها (بيخلي الموقع حي) */
+/* بنستهدف العناصر اللي واخدة كلاس bg-white وجواها منتجات */
+.bg-white:hover {
+    transform: translateY(-5px); /* يرفع الكارت لفوق */
+    transition: transform 0.3s ease;
+}
